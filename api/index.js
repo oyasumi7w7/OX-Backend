@@ -1,19 +1,20 @@
 const mongoose = require('mongoose')
 const cors = require('cors')
-const expres = require('express')
+const express = require('express')
 const dotenv = require('dotenv')
 const config = require('../config')
 const replays = require('../src/replayModel')
 
-const app = expres()
-app.use(expres.json())
+const app = express()
+app.use(express.json())
 app.use(cors())
 
 dotenv.config()
 
+console.log(process.env.MONGO_URI)
 app.use(async (req, res, next) => {
     try {
-        await mongoose.connect(config.mongoUri);
+        await mongoose.connect(process.env.MONGO_URI);
         next();
     } catch (error) {
         console.log(error);
@@ -23,7 +24,7 @@ app.use(async (req, res, next) => {
 
 if (config.isVercel) {
     app.use(async (req, res, next) => {
-        await mongoose.connect(config.mongoUri);
+        await mongoose.connect(process.env.MONGO_URI);
         return next();
     });
 }
