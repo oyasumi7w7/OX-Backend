@@ -11,15 +11,15 @@ app.use(cors())
 
 dotenv.config()
 
-app.use(async (req, res, next) => {
-    try {
-        await mongoose.connect(config.mongoUri);
-        next();
-    } catch (error) {
-        console.log(error);
-        res.status(500).send(process.env.MONGO_URI);
-    }
-});
+// app.use(async (req, res, next) => {
+//     try {
+//         await mongoose.connect(config.mongoUri);
+//         next();
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).send(process.env.MONGO_URI);
+//     }
+// });
 
 if (config.isVercel) {
     app.use(async (req, res, next) => {
